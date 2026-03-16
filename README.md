@@ -4,43 +4,30 @@
 To design and develop a prototype application for Named Entity Recognition (NER) by leveraging a fine-tuned BART model and deploying the application using the Gradio framework for user interaction and evaluation.
 
 ### PROBLEM STATEMENT:
+### Design Steps
 
-### DESIGN STEPS:
+### Step 1: Import Required Libraries
+First, we import the necessary Python libraries such as os, json, requests, gradio, and dotenv. These libraries help us handle environment variables, send API requests, and create the user interface. We also load the .env file to securely access the Hugging Face API key and model endpoint.
 
-#### STEP 1: Import Libraries and Load Environment Variables 
+### Step 2: Create Helper Function for API Request
+Next, we create a function called get_completion(). This function sends a POST request to the Hugging Face Inference API. It also includes the Authorization header using the API token so that the request can securely access the model.
 
-Import the necessary Python libraries: os, json, requests, gradio, and dotenv.
+### Step 3: Implement the Named Entity Recognition (NER) Function
+Then we define the NER function which takes the input text from the user. This function calls the get_completion() helper function and sends the text to the NER model endpoint. After receiving the response, it processes the JSON data and extracts the named entities such as person names, locations, and organizations.
 
-Load the .env file to access the Hugging Face API key and model endpoints securely.
+### Step 4: Merge Tokens (Optional Step)
+Sometimes the model splits words into smaller parts called tokens (for example: “Cal” and “##ifornia”). To make the output easier to read, we implement a merge_tokens() function which combines these tokens into a single word like “California”.
 
-#### STEP 2: Define Helper Function for API Calls
+### Step 5: Create the Gradio User Interface
+Finally, we build a simple Gradio interface using gr.Interface().
 
-Create a get_completion() function that sends HTTP POST requests to the Hugging Face Inference API.
+The input is a textbox where users can enter the text.
 
-Include Authorization headers for secure access using the API token.
+The output is a highlighted text display that shows the detected entities.
 
-#### STEP 3: Define the Named Entity Recognition (NER) Function
+We also add example sentences so users can quickly test the application.
 
-Use the get_completion() function to send input text to the NER model endpoint.
-
-Process the JSON response and extract named entities.
-
-#### STEP 4: Token Merging (Optional Enhancement)
-
-Implement a merge_tokens() helper function to merge subword tokens (e.g., “Cal” + “##ifornia” → “California”) for cleaner entity visualization.
-
-#### STEP 5: Build Gradio Interface
-
-Create a Gradio interface using gr.Interface() with:
-
-Input: Textbox for entering text.
-
-Output: HighlightedText for displaying entities.
-
-Example texts for quick testing.
-
-Launch the application using demo.launch(share=True) to generate a public link for access.
-
+After setting up the interface, we run the application using demo.launch(share=True), which generates a public link so others can access and test the application easily.
 
 ### PROGRAM:
 ```
@@ -108,43 +95,15 @@ demo = gr.Interface(
     description="Find named entities using the dslim/bert-base-NER model via Hugging Face Inference API.",
     allow_flagging="never",
     examples=[
-        "My name is Dharshan , I work at DeepLearningAI and live in Chennai.",
-        "I'm lives in Chennai and works at HuggingFace."
+        "My name is Dharshan V, I work at DeepLearningAI and live in Chennai.",
+        "Dharshan lives in Chennai and works at HuggingFace."
     ]
 )
 
 demo.launch(share=True, server_port=int(os.environ.get("PORT3", 7860)))
-Closing server running on port: 7863
-Closing server running on port: 7863
-Closing server running on port: 7862
-Closing server running on port: 7862
-Closing server running on port: 7863
-Closing server running on port: 7862
-Closing server running on port: 7862
-Closing server running on port: 7863
-Closing server running on port: 7862
-Closing server running on port: 7863
-Closing server running on port: 7863
-Closing server running on port: 7862
-Closing server running on port: 7861
-Running on local URL:  https://0.0.0.0:7862
-IMPORTANT: You are using gradio version 3.37.0, however version 4.44.1 is available, please upgrade.
---------
-
-Could not create share link. Missing file: /usr/local/lib/python3.9/site-packages/gradio/frpc_linux_amd64_v0.2. 
-
-Please check your internet connection. This can happen if your antivirus software blocks the download of this file. You can install manually by following these steps: 
-
-1. Download this file: https://cdn-media.huggingface.co/frpc-gradio-0.2/frpc_linux_amd64
-2. Rename the downloaded file to: frpc_linux_amd64_v0.2
-3. Move the file to this location: /usr/local/lib/python3.9/site-packages/gradio
 ```
 ### OUTPUT:
-<img width="1738" height="619" alt="image" src="https://github.com/user-attachments/assets/6bae5061-5a2d-4f58-9612-37ac87f395bf" />
-
 
 ### RESULT:
 The Named Entity Recognition (NER) prototype was successfully developed using the fine-tuned BERT model (dslim/bert-base-NER) and deployed through the Gradio interface.
 The system efficiently identifies and highlights entities such as names, locations, and organizations from user-provided text input.
-
-
