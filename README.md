@@ -103,6 +103,7 @@ demo = gr.Interface(
 demo.launch(share=True, server_port=int(os.environ.get("PORT3", 7860)))
 ```
 ### OUTPUT:
+![image alt](https://github.com/DHARSHANV7/genai-ner-bart-gradio/blob/6191708adeb3ecfaa6771a1684117d8c7ed9c11f/Screenshot%202026-03-16%20152433.png)
 
 ### RESULT:
 The Named Entity Recognition (NER) prototype was successfully developed using the fine-tuned BERT model (dslim/bert-base-NER) and deployed through the Gradio interface.
